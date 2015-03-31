@@ -3,9 +3,17 @@
  * @author vivaxy
  */
 
-$('nav').find('div').each(function (item, index) {
-    item.innerText = index + '号';
-}).on('click', function (e) {
+var logHtml = function (e) {
     e.stopPropagation();
-    console.log(this.innerText);
+    console.log(this.innerHTML);
+    $('nav').off('click', logHtml);
+};
+
+$('nav').on('click', logHtml);
+
+$('nav div').forEach(function (item, index) {
+    item.on('click', function (e) {
+        e.stopPropagation();
+        console.log(index);
+    });
 });

@@ -8,5 +8,5 @@ mobile jquery
 ## usage
 
 ```js
-    $('name')
+$('body')
 ```
