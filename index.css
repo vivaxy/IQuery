@@ -1,0 +1,19 @@
+/**
+ * @since 150331 14:26
+ * @author vivaxy
+ */
+body {
+    margin: 0;
+}
+
+nav > div {
+    background-color: #f63;
+    display: inline-block;
+    width: 100px;
+    height: 60px;
+    margin: 20px;
+    line-height: 60px;
+    text-align: center;
+    color: #fff;
+}
+
