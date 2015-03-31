@@ -3,11 +3,9 @@
  * @author vivaxy
  */
 
-$('nav').on('click', function (e) {
-    e.stopPropagation();
-    console.log(this, e);
-});
-
 $('nav').find('div').each(function (item, index) {
-    item.innerText = index + '名';
+    item.innerText = index + '号';
+}).on('click', function (e) {
+    e.stopPropagation();
+    console.log(this.innerText);
 });
