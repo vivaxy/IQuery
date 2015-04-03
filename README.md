@@ -1,9 +1,9 @@
-# IQuery
-mobile jquery
+# dom
+mobile dom selector
 
 ## example
 
-[here](http://vivaxy.github.io/IQuery/example/)
+[see here](http://vivaxy.github.io/dom/example/)
 
 ## usage
 
