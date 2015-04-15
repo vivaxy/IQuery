@@ -5,15 +5,12 @@
 
 var logHtml = function (e) {
     e.stopPropagation();
-    console.log(this.innerHTML);
-    $('nav').off('click', logHtml);
+    $('body').append(this.innerHTML);
+    console.log(this);
 };
 
 $('nav').on('click', logHtml);
 
 $('nav div').forEach(function (item, index) {
-    item.on('click', function (e) {
-        e.stopPropagation();
-        console.log(index);
-    });
+    item.on('click',logHtml);
 });
