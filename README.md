@@ -10,3 +10,7 @@ mobile dom selector
 ```js
 $('body')
 ```
+
+## caution
+
+It's bad to change or extend native objects.
