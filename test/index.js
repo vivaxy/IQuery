@@ -104,9 +104,78 @@ describe('html', function () {
         var eleText = '';
         dom.each(function (ele, index) {
             eleText += ele.innerText;
-            ele.innerHTML = index+1;
+            ele.innerHTML = index + 1;
         });
         assert.equal(eleText, '5555');
     });
 });
 
+describe('append(`element`)', function () {
+    it('should throw error: Dom: elements\' size does not fit the argument', function () {
+        var dom = $('nav div');
+        var div = document.createElement('div');
+        div.innerText = '0';
+        try {
+            dom.append(div);
+        } catch (e) {
+            assert.equal(e, 'Dom: elements\' size does not fit the argument');
+        }
+    });
+});
+
+describe('append(`element`)', function () {
+    it('should append a single div in nav', function () {
+        var dom = $('nav');
+        var div = document.createElement('div');
+        div.innerText = '5';
+        dom.append(div);
+        assert.equal($('nav div').length, 5);
+    });
+});
+
+describe('append(`html`)', function () {
+    it('should append a single div in nav', function () {
+        var dom = $('nav');
+        dom.append('<div>6</div>');
+        assert.equal($('nav div').length, 6);
+    });
+});
+
+describe('addClass', function () {
+    it('should add class `test` to nav', function () {
+        var dom = $('nav');
+        dom.addClass('test');
+        assert.equal(dom[0].className, 'test');
+    });
+});
+
+describe('removeClass', function () {
+    it('should remove class `test` to nav', function () {
+        var dom = $('nav');
+        dom.removeClass('test');
+        assert.equal(dom[0].className, '');
+    });
+});
+
+describe('hasClass', function () {
+    it('should return if `nav` has class `test`', function () {
+        var dom = $('nav');
+        assert.equal(dom.hasClass('test'), false);
+    });
+});
+
+describe('find', function () {
+    it('should get the 6 divs in nav', function () {
+        var dom = $('nav');
+        var subDom = dom.find('div');
+        assert.equal(subDom.length, 6);
+    });
+});
+
+describe('data', function () {
+    it('should set the data to nav', function () {
+        var dom = $('nav');
+        dom.data('nameSpace', 'myDomSelector');
+        assert.equal(dom.data('nameSpace'), 'myDomSelector');
+    });
+});
