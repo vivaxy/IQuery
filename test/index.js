@@ -9,53 +9,24 @@ var addResultValue = function (e) {
     result++;
 };
 
-describe('on', function () {
+describe('$(`selector`)', function () {
     it('should select the 4 div in the nav', function () {
-        var dom = $('nav div');
-        dom.on('click', addResultValue);
-        dom.trigger('click');
-        dom.off('click', addResultValue);
-        assert.equal(result, 4);
-    });
-});
-
-describe('trigger', function () {
-    it('should trigger 4 times add result value function', function () {
-        var dom = $('nav div');
-        dom.on('click', addResultValue);
-        dom.trigger('click');
-        dom.off('click', addResultValue);
-        assert.equal(result, 8);
-    });
-});
-
-describe('off', function () {
-    it('should not trigger add result value function', function () {
-        var dom = $('nav div');
-        dom.on('click', addResultValue);
-        dom.off('click', addResultValue);
-        dom.trigger('click');
-        assert.equal(result, 8);
+        var dom = $($('nav div'));
+        assert.equal(dom.length, 4);
     });
 });
 
 describe('$(`Dom object`)', function () {
     it('should select the 4 div in the nav', function () {
         var dom = $($('nav div'));
-        dom.on('click', addResultValue);
-        dom.trigger('click');
-        dom.off('click', addResultValue);
-        assert.equal(result, 12);
+        assert.equal(dom.length, 4);
     });
 });
 
 describe('$(`HTMLElement object`)', function () {
     it('should select the first div in the nav', function () {
         var dom = $($('nav div')[0]);
-        dom.on('click', addResultValue);
-        dom.trigger('click');
-        dom.off('click', addResultValue);
-        assert.equal(result, 13);
+        assert.equal(dom.length, 1);
     });
 });
 
@@ -83,7 +54,40 @@ describe('selector', function () {
     });
 });
 
-describe('each', function () {
+describe('on(`type`, `function`)', function () {
+    it('should select the 4 div in the nav', function () {
+        var dom = $('nav div');
+        dom.on('click', addResultValue);
+        dom.trigger('click');
+        dom.off('click', addResultValue);
+        assert.equal(result, 4);
+        result = 0;
+    });
+});
+
+describe('trigger(`type`, `data`)', function () {
+    it('should trigger 4 times add result value function', function () {
+        var dom = $('nav div');
+        dom.on('click', addResultValue);
+        dom.trigger('click');
+        dom.off('click', addResultValue);
+        assert.equal(result, 4);
+        result = 0;
+    });
+});
+
+describe('off(`type`[, `function`])', function () {
+    it('should not trigger add result value function', function () {
+        var dom = $('nav div');
+        dom.on('click', addResultValue);
+        dom.off('click', addResultValue);
+        dom.trigger('click');
+        assert.equal(result, 0);
+        result = 0;
+    });
+});
+
+describe('each(function(`element`, `index`))', function () {
     it('should select the divs, and execute in each divs', function () {
         var dom = $('nav div');
         var eleText = '';
@@ -97,7 +101,7 @@ describe('each', function () {
     });
 });
 
-describe('html', function () {
+describe('html(`html`)', function () {
     it('should replace divs inner html', function () {
         var dom = $('nav div');
         dom.html('5');
@@ -141,7 +145,7 @@ describe('append(`html`)', function () {
     });
 });
 
-describe('addClass', function () {
+describe('addClass(`className`)', function () {
     it('should add class `test` to nav', function () {
         var dom = $('nav');
         dom.addClass('test');
@@ -149,7 +153,7 @@ describe('addClass', function () {
     });
 });
 
-describe('removeClass', function () {
+describe('removeClass(`className`)', function () {
     it('should remove class `test` to nav', function () {
         var dom = $('nav');
         dom.removeClass('test');
@@ -157,14 +161,14 @@ describe('removeClass', function () {
     });
 });
 
-describe('hasClass', function () {
+describe('hasClass(`className`)', function () {
     it('should return if `nav` has class `test`', function () {
         var dom = $('nav');
         assert.equal(dom.hasClass('test'), false);
     });
 });
 
-describe('find', function () {
+describe('find(`selector`)', function () {
     it('should get the 6 divs in nav', function () {
         var dom = $('nav');
         var subDom = dom.find('div');
@@ -172,7 +176,7 @@ describe('find', function () {
     });
 });
 
-describe('data', function () {
+describe('data(`key`[, `value`])', function () {
     it('should set the data to nav', function () {
         var dom = $('nav');
         dom.data('nameSpace', 'myDomSelector');
