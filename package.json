@@ -1,0 +1,29 @@
+{
+  "name": "dom",
+  "version": "1.0.0",
+  "description": "dom selector",
+  "main": "lib/dom.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vivaxy/dom.git"
+  },
+  "keywords": [
+    "dom"
+  ],
+  "author": "vivaxy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vivaxy/dom/issues"
+  },
+  "homepage": "https://github.com/vivaxy/dom",
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4"
+  }
+}
