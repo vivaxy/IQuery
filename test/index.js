@@ -183,3 +183,34 @@ describe('data(`key`[, `value`])', function () {
         assert.equal(dom.data('nameSpace'), 'myDomSelector');
     });
 });
+
+describe('get(`index`)', function () {
+    it('should get element at index', function () {
+        var ele = $('nav div').get(1);
+        assert.equal(ele, document.querySelectorAll('nav div')[1]);
+    });
+});
+
+describe('get()', function () {
+    it('should get all elements as an array', function () {
+        var elements = $('nav div').get();
+        assert.equal(elements.length, document.querySelectorAll('nav div').length);
+    });
+});
+
+describe('text(`string`)', function () {
+    it('should set element text to `string`', function () {
+        var ele = $('nav div').text('haha');
+        assert.equal('haha', document.querySelectorAll('nav div')[1].textContent);
+    });
+});
+
+describe('text()', function () {
+    it('should get the first element text content', function () {
+        var text = $('nav div:first-child').text();
+        assert.equal(text, 'haha');
+        $('nav div').each(function (div, index) {
+            div.innerHTML = index;
+        });
+    });
+});

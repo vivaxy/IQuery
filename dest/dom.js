@@ -29,7 +29,15 @@
         return new Dom(selector);
     };
 
-    // for multiple elements 
+    // for multiple elements and single elements
+    p.get = function (index) {
+        if (index !== undefined) {
+            return this[index];
+        } else {
+            return Array.prototype.slice.call(this);
+        }
+    };
+
     p.on = function (type, callback) {
         this.each(function (ele) {
             ele.addEventListener(type, callback, false);
@@ -66,13 +74,6 @@
         }
     };
 
-    p.html = function (html) {
-        this.each(function (ele) {
-            ele.innerHTML = html;
-        });
-        return this;
-    };
-
     p.addClass = function (name) {
         this.each(function (ele) {
             ele.classList.add(name);
@@ -106,7 +107,22 @@
         }
     };
 
-    // different action
+    // treat multiple elements and single elements differently
+    p.html = function (html) {
+        if (html) {
+            this.each(function (ele) {
+                ele.innerHTML = html;
+            });
+            return this;
+        } else {
+            if (this.length === 1) {
+                return this[0].innerHTML;
+            } else {
+                throw singleElementMethodErrorString;
+            }
+        }
+    };
+
     p.append = function (html) {
         if (typeof html === 'string') {
             this.each(function (ele) {
@@ -137,6 +153,23 @@
                 ele.dataset[key] = value;
             });
             return this;
+        }
+    };
+
+    p.text = function (text) {
+        if (text !== undefined) {
+            // set
+            this.each(function (ele) {
+                ele.textContent = text;
+            });
+            return this;
+        } else {
+            // get
+            if (this.length === 1) {
+                return this[0].textContent;
+            } else {
+                throw singleElementMethodErrorString;
+            }
         }
     };
 

@@ -1,9 +1,9 @@
 # dom
 mobile dom selector
 
-## example
+## demo
 
-[see here](http://vivaxy.github.io/dom/test/)
+[here](http://vivaxy.github.io/dom/demo/)
 
 ## usage
 
