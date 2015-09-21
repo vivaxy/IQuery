@@ -3,10 +3,9 @@
  * @author vivaxy
  */
 'use strict';
-(function (global) {
-
-    var Dom = function (selector) {
-        var _this = this, elements;
+class Dom {
+    constructor(selector) {
+        let _this = this, elements;
         if (typeof selector === 'string') {
             elements = document.querySelectorAll(selector);
         } else if (selector instanceof HTMLElement) {
@@ -18,99 +17,95 @@
         } else {
             throw 'Dom: selector type error';
         }
-        Array.prototype.slice.call(elements).forEach(function (element, index) {
+        Array.prototype.slice.call(elements).forEach((element, index) => {
             _this[index] = element;
         });
         this.length = elements.length;
         this.selector = selector;
-    }, p = {};
-    Dom.prototype = p;
-    global.$ = function (selector) {
-        return new Dom(selector);
-    };
+        this.singleElementMethodErrorString = 'Dom: element\'s size does not fit';
+    }
 
     // for multiple elements and single elements
-    p.get = function (index) {
+    get(index) {
         if (index !== undefined) {
             return this[index];
         } else {
             return Array.prototype.slice.call(this);
         }
-    };
+    }
 
-    p.on = function (type, callback) {
-        this.each(function (ele) {
+    on(type, callback) {
+        this.each(ele => {
             ele.addEventListener(type, callback, false);
         });
         return this;
-    };
+    }
 
-    p.off = function (type, callback) {
-        this.each(function (ele) {
+    off(type, callback) {
+        this.each(ele => {
             ele.removeEventListener(type, callback, false);
         });
         return this;
-    };
+    }
 
-    p.trigger = function (type) {
-        var specialEvents = {
+    trigger(type) {
+        let specialEvents = {
                 mousemove: "MouseEvents",
                 mouseup: "MouseEvents",
                 mousedown: "MouseEvents",
                 click: "MouseEvents"
             },
             bubbles = true;
-        this.each(function (ele) {
-            var event = document.createEvent(specialEvents[type] || 'Events');
+        this.each(ele => {
+            let event = document.createEvent(specialEvents[type] || 'Events');
             event.initEvent(type, bubbles, true);
             ele.dispatchEvent(event);
         });
         return this;
-    };
+    }
 
-    p.each = function (callback) {
-        for (var i = 0; i < this.length; i++) {
+    each(callback) {
+        for (let i = 0; i < this.length; i++) {
             callback(this[i], i);
         }
-    };
+        return this;
+    }
 
-    p.addClass = function (name) {
-        this.each(function (ele) {
+    addClass(name) {
+        this.each(ele => {
             ele.classList.add(name);
         });
         return this;
-    };
+    }
 
-    p.removeClass = function (name) {
-        this.each(function (ele) {
+    removeClass(name) {
+        this.each(ele => {
             ele.classList.remove(name);
         });
         return this;
-    };
+    }
 
     // for single element
-    var singleElementMethodErrorString = 'Dom: element\'s size does not fit';
-
-    p.hasClass = function (name) {
+    hasClass(name) {
         if (this.length === 1) {
             return this[0].classList.contains(name);
         } else {
-            throw singleElementMethodErrorString;
+            throw new Error(this.singleElementMethodErrorString);
         }
-    };
+    }
 
-    p.find = function (selector) {
+    find(selector) {
         if (this.length === 1) {
             return new Dom(this.selector + ' ' + selector);
         } else {
-            throw singleElementMethodErrorString;
+            throw new Error(this.singleElementMethodErrorString);
         }
-    };
+    }
 
     // treat multiple elements and single elements differently
-    p.html = function (html) {
+    html(html) {
         if (html) {
-            this.each(function (ele) {
+            this.each(ele => {
                 ele.innerHTML = html;
             });
             return this;
@@ -118,14 +113,14 @@
             if (this.length === 1) {
                 return this[0].innerHTML;
             } else {
-                throw singleElementMethodErrorString;
+                throw new Error(this.singleElementMethodErrorString);
             }
         }
-    };
+    }
 
-    p.append = function (html) {
+    append(html) {
         if (typeof html === 'string') {
-            this.each(function (ele) {
+            this.each(ele => {
                 ele.insertAdjacentHTML('beforeEnd', html);
             });
         } else {
@@ -133,33 +128,33 @@
                 // single element
                 this[0].appendChild(html);
             } else {
-                throw 'Dom: elements\' size does not fit the argument';
+                throw new Error('Dom: elements\' size does not fit the argument');
             }
         }
         return this;
-    };
+    }
 
-    p.data = function (key, value) {
+    data(key, value) {
         if (value === undefined) {
             // get
             if (this.length === 1) {
                 return this[0].dataset[key];
             } else {
-                throw singleElementMethodErrorString;
+                throw new Error(this.singleElementMethodErrorString);
             }
         } else {
             // set
-            this.each(function (ele) {
+            this.each(ele => {
                 ele.dataset[key] = value;
             });
             return this;
         }
-    };
+    }
 
-    p.text = function (text) {
+    text(text) {
         if (text !== undefined) {
             // set
-            this.each(function (ele) {
+            this.each(ele => {
                 ele.textContent = text;
             });
             return this;
@@ -168,9 +163,13 @@
             if (this.length === 1) {
                 return this[0].textContent;
             } else {
-                throw singleElementMethodErrorString;
+                throw new Error(this.singleElementMethodErrorString);
             }
         }
-    };
+    }
 
-})(window);
+}
+
+export default (selector)  => {
+    return new Dom(selector);
+};
